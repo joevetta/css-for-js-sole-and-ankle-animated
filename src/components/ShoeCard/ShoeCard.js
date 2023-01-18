@@ -37,6 +37,8 @@ const ShoeCard = ({
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
+        {variant === "on-sale" && <SaleFlag>Sale</SaleFlag>}
+        {variant === "new-release" && <NewFlag>Just released!</NewFlag>}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
@@ -57,8 +59,6 @@ const ShoeCard = ({
             <SalePrice>{formatPrice(salePrice)}</SalePrice>
           ) : undefined}
         </Row>
-        {variant === "on-sale" && <SaleFlag>Sale</SaleFlag>}
-        {variant === "new-release" && <NewFlag>Just released!</NewFlag>}
       </Wrapper>
     </Link>
   );
@@ -74,24 +74,28 @@ const Wrapper = styled.article`
 `;
 
 const ImageWrapper = styled.div`
-  overflow: hidden;
   border-radius: 16px 16px 4px 4px;
-
-  & img {
-    transform: scale(1);
-    transition: transform 250ms;
-  }
-
-  &:hover img {
-    transform: scale(1.2);
-    transition: transform 100ms;
-  }
+  /*
+    Image zooms in on hover/focus,
+    truncate the spillover
+  */
+  overflow: hidden;
 `;
 
 const Image = styled.img`
-  width: 100%;
   display: block;
-  transform-origin: 50% 80%;
+  width: 100%;
+  transform-origin: 50% 75%;
+  transition: transform 600ms;
+  will-change: transform;
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      transform: scale(1.1);
+      transition: transform 200ms;
+    }
+  }
 `;
 
 const Row = styled.div`
