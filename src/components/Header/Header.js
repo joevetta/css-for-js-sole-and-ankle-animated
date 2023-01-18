@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -20,12 +20,24 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLink href="/sale">
+            <NavText value="Sale">Sale</NavText>
+          </NavLink>
+          <NavLink href="/new">
+            <NavText value="New&nbsp;Releases">New&nbsp;Releases</NavText>
+          </NavLink>
+          <NavLink href="/men">
+            <NavText value="Men">Men</NavText>
+          </NavLink>
+          <NavLink href="/women">
+            <NavText value="Women">Women</NavText>
+          </NavLink>
+          <NavLink href="/kids">
+            <NavText value="Kids">Kids</NavText>
+          </NavLink>
+          <NavLink href="/collections">
+            <NavText value="Collections">Collections</NavText>
+          </NavLink>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -114,15 +126,34 @@ const Filler = styled.div`
   }
 `;
 
+const NavText = styled.span`
+  display: inline-block;
+  &::before {
+    content: "${(p) => p.value}";
+    position: absolute;
+    top: 100%;
+    font-weight: ${WEIGHTS.bold};
+  }
+`;
+
 const NavLink = styled.a`
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  overflow: hidden;
 
   &:first-of-type {
     color: var(--color-secondary);
+  }
+
+  &:hover span {
+    transform: translateY(-100%);
+  }
+
+  & span {
+    transition: transform 300ms;
   }
 `;
 
